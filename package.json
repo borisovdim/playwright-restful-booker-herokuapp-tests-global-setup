@@ -1,0 +1,22 @@
+{
+  "name": "playwright-restful-booker-herokuapp-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/borisovdim/playwright-restful-booker-herokuapp-tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/borisovdim/playwright-restful-booker-herokuapp-tests/issues"
+  },
+  "homepage": "https://github.com/borisovdim/playwright-restful-booker-herokuapp-tests#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.18"
+  }
+}
