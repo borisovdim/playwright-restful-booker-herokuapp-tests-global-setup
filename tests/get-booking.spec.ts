@@ -1,6 +1,6 @@
-import * as api from '../tests/api/api.ts';
-import { expect, test } from './fixtures/auth-fixture.ts';
+import * as api from './api/api.ts';
 import { createRandomUser } from './api/types.ts';
+import { expect, test } from './fixtures/auth-fixture.ts';
 
 const bookingData = createRandomUser();
 
@@ -17,10 +17,9 @@ test.afterEach(async ({ context }) => {
   expect(response.status()).toBe(201);
 });
 
-test('Get bookings', async ({ context }) => {
-  const { response, data } = await api.getBookingIds({ context });
-  expect(response.status()).toBe(200);
+test('Get booking', async ({ context }) => {
+  const { response, data } = await api.getBooking({ context }, bookingId);
 
-  const bookingIds = data.map(b => b.bookingid);
-  expect(bookingIds).toContain(bookingId);
+  expect(response.status()).toBe(200);
+  expect(data).toEqual(bookingData);
 });
