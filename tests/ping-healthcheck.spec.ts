@@ -1,13 +1,7 @@
 import * as api from './api/api.ts';
-import { expect, test, request } from '@playwright/test';
+import { expect, test } from './fixtures/auth-fixture.ts';
 
-let context;
-
-test.beforeEach(async () => {
-  context = await request.newContext();
-});
-
-test('Ping - HealthCheck', async () => {
-  const { response } = await api.healthCheck({ context: context });
+test('Ping - HealthCheck', async ({nonAuthContext}) => {
+  const { response } = await api.healthCheck(nonAuthContext);
   expect(response.status()).toBe(201);
 });

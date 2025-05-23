@@ -6,19 +6,19 @@ const bookingData = createRandomUser();
 
 let bookingId: number;
 
-test.beforeEach(async ({ context }) => {
-  const { response, data } = await api.createBooking({ context }, bookingData);
+test.beforeEach(async ({ authContext }) => {
+  const { response, data } = await api.createBooking(authContext, bookingData);
   bookingId = data.bookingid;
   expect(response.status()).toBe(200);
 });
 
-test.afterEach(async ({ context }) => {
-  const { response } = await api.deleteBooking({ context }, bookingId);
+test.afterEach(async ({ authContext }) => {
+  const { response } = await api.deleteBooking(authContext, bookingId);
   expect(response.status()).toBe(201);
 });
 
-test('Get bookings', async ({ context }) => {
-  const { response, data } = await api.getBookingIds({ context });
+test('Get bookings', async ({ nonAuthContext }) => {
+  const { response, data } = await api.getBookingIds(nonAuthContext);
   expect(response.status()).toBe(200);
 
   const bookingIds = data.map(b => b.bookingid);

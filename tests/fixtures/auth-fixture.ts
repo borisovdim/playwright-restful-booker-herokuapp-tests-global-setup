@@ -1,15 +1,23 @@
-import { test as base, expect } from '@playwright/test';
-import path from 'path';
+import { test as base, request } from '@playwright/test';
+import fs from 'fs';
 
-const authFile = path.join(__dirname, '../../playwright/.auth/user-state.json');
-export const test = base.extend({
-  context: async ({ browser }, use) => {
-    const context = await browser.newContext({
-      storageState: authFile,
+type AuthContext = ReturnType<typeof request.newContext>;
+
+export const test = base.extend<{ authContext: AuthContext; nonAuthContext: AuthContext }>({
+  authContext: async ({}, use) => {
+    const token = JSON.parse(fs.readFileSync('auth-token.json', 'utf-8'));
+    const apiContext = await request.newContext({
+      extraHTTPHeaders: {
+        Cookie: `token=${token}`,
+      },
     });
-    await use(context);
-    await context.close();
+    await use(apiContext);
+  },
+
+  nonAuthContext: async ({}, use) => {
+    const apiContext = await request.newContext();
+    await use(apiContext);
   },
 });
 
-export { expect };
+export { expect } from '@playwright/test';
